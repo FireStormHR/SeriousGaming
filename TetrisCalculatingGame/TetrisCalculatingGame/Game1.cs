@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetrisCalculatingGame
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
+        KeyboardState oldState;             //Makes it possible to compare the old keyboard state with the new one
+        MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
         SpriteBatch spriteBatch;
+
 
         public Game1()
         {
@@ -18,17 +19,16 @@ namespace TetrisCalculatingGame
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            oldState = Keyboard.GetState();
+            oldMouse = Mouse.GetState();
+            this.IsMouseVisible = true;     //You can see the cursor
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace TetrisCalculatingGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            //spritefont should be assigned null here, for magic reasons
         }
 
         /// <summary>
