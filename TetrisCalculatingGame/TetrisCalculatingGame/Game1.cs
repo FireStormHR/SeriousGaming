@@ -7,12 +7,13 @@ namespace TetrisCalculatingGame
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        KeyboardState oldState;             //Makes it possible to compare the old keyboard state with the new one
-        MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
-        SpriteBatch spriteBatch;
-        Dictionary<string, Texture2D> All_Textures = new Dictionary<string, Texture2D>();
-        SpriteFont Arial_32 = null;
+        public GraphicsDeviceManager graphics;
+        public KeyboardState oldState;             //Makes it possible to compare the old keyboard state with the new one
+        public MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
+        public SpriteBatch spriteBatch;
+        public Dictionary<string, Texture2D> All_Textures = new Dictionary<string, Texture2D>();
+        public SpriteFont Arial_32 = null;
+        public int screen_depth, screen_width;
 
 
         public Game1()
@@ -30,11 +31,11 @@ namespace TetrisCalculatingGame
             oldMouse = Mouse.GetState();
             IsMouseVisible = true; //You can see the cursor
             graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                //Set xna resolution height to curr screen resolution
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                //Set xna resolution width to curr screen resolution
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //Set xna resolution height to curr screen resolution
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;   //Set xna resolution width to curr screen resolution
             graphics.ApplyChanges();
+            screen_depth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            screen_width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace TetrisCalculatingGame
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.DrawString(Arial_32, "Back to menu", new Vector2(700, 10), Color.Black);
+            spriteBatch.DrawString(Arial_32, "Back to menu", new Vector2((2/5)*screen_width, (1/3)*screen_depth), Color.Black);
             spriteBatch.End();
             base.Draw(gameTime);
         }

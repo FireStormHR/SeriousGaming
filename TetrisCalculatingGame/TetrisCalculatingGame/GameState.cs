@@ -16,14 +16,17 @@ namespace TetrisCalculatingGame
 
         }
 
-        public SetStateToMenu()
+        public void SetStateToMenu()
         {
+            this.Menu = true;
+            this.In_Game = false;
             
         }
 
-        public SetStateToGame()
+        public void SetStateToGame()
         {
-            
+            this.Menu = false;
+            this.In_Game = true;
         }
 
 
