@@ -1,6 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+
+
 
 namespace TetrisCalculatingGame
 {
@@ -11,6 +17,8 @@ namespace TetrisCalculatingGame
         KeyboardState oldState;             //Makes it possible to compare the old keyboard state with the new one
         MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
         SpriteBatch spriteBatch;
+        Dictionary<string, Texture2D> All_Textures = new Dictionary<string, Texture2D>();
+        SpriteFont Arial_12 = null;
 
 
         public Game1()
@@ -27,8 +35,10 @@ namespace TetrisCalculatingGame
             oldState = Keyboard.GetState();
             oldMouse = Mouse.GetState();
             this.IsMouseVisible = true;     //You can see the cursor
-            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            this.graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //Set xna resolution height to curr screen resolution
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;   //Set xna resolution width to curr screen resolution
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -38,7 +48,12 @@ namespace TetrisCalculatingGame
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+
+
+
+            Arial_12 = Content.Load<SpriteFont>("NewSpriteFont");
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -50,7 +65,7 @@ namespace TetrisCalculatingGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            //spritefont should be assigned null here, for magic reasons
+            Arial_12 = null;
         }
 
         /// <summary>
