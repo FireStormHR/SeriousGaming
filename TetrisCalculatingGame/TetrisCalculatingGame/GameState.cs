@@ -6,7 +6,26 @@ using System.Threading.Tasks;
 
 namespace TetrisCalculatingGame
 {
-    class GameState
+    public class GameState
     {
+        private bool Menu, In_Game;
+        public GameState(bool dsds)
+        {
+            this.Menu = true;
+            this.In_Game = false;
+
+        }
+
+        public SetStateToMenu()
+        {
+            
+        }
+
+        public SetStateToGame()
+        {
+            
+        }
+
+
     }
 }

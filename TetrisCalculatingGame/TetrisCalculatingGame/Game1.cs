@@ -18,7 +18,7 @@ namespace TetrisCalculatingGame
         MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
         SpriteBatch spriteBatch;
         Dictionary<string, Texture2D> All_Textures = new Dictionary<string, Texture2D>();
-        SpriteFont Arial_12 = null;
+        SpriteFont Arial_32 = null;
 
 
         public Game1()
@@ -52,7 +52,7 @@ namespace TetrisCalculatingGame
 
 
 
-            Arial_12 = Content.Load<SpriteFont>("NewSpriteFont");
+            Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
             
 
             // TODO: use this.Content to load your game content here
@@ -65,7 +65,7 @@ namespace TetrisCalculatingGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            Arial_12 = null;
+            Arial_32 = null;
         }
 
         /// <summary>
@@ -92,7 +92,9 @@ namespace TetrisCalculatingGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.DrawString(Arial_32, "Back to menu", new Vector2(700, 10), Color.Black);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
