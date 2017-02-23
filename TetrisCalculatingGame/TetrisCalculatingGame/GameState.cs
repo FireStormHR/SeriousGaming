@@ -12,11 +12,11 @@ namespace TetrisCalculatingGame
     public class GameState
     {
         public bool Menu, In_Game;
-        public Dictionary<string, Texture2D> All_Textures;
+        public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures;
         public KeyboardState OldState;
         public MouseState OldMouse;
 
-        public GameState(Dictionary<string, Texture2D> All_textures, KeyboardState oldState, MouseState oldMouse)
+        public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, KeyboardState oldState, MouseState oldMouse)
         {
             this.Menu = true;
             this.In_Game = false;
@@ -43,89 +43,60 @@ namespace TetrisCalculatingGame
 
         public void CheckMenuClicks(GraphicsDeviceManager graphics)
         {
+            //VOORBEELD
 
+            KeyboardState newState = Keyboard.GetState();
+            MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
+
+
+
+            Vector2 NewMouseCoordinates = new Vector2(newMouse.X, newMouse.Y);
+
+
+            // Is the key down?
+            if (newState.IsKeyDown(Keys.A))                                      //press A to change full screen mode or not
+            {
+                // If not down last update, key has just been pressed.
+                if (!this.OldState.IsKeyDown(Keys.A))
+                {
+                    //d
+                }
+            }
+
+            else if (this.OldState.IsKeyDown(Keys.A))
+            {
+                // Key was down last update, but not down now, so
+                // it has just been released.
+            }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+            //Depending on which gamestate boolean is tru, it checks if the mouse clicked in one of the areas linked with it.
+
+            if (newMouse.LeftButton == ButtonState.Pressed)
+            {
+                // If not down last update, key has just been pressed.
+                if (this.OldMouse.LeftButton != ButtonState.Pressed)
+                {
+                    
+
+                }
+            }
+
+            else if (this.OldMouse.LeftButton == ButtonState.Pressed) { }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+
+
+
+            // Update saved state.
+            this.OldState = newState;
+            this.OldMouse = newMouse;
 
 
         }
 
         public void CheckGameClicks(GraphicsDeviceManager graphics)
         {
-            ////VOORBEELD
-
-            //KeyboardState newState = Keyboard.GetState();
-            //MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
-
-
-
-            //float ThisWillBeX = newMouse.X * (Screen_Width_Ratio);          //Matches the pixel resolution with the mouse position
-            //float ThisWillBeY = newMouse.Y * (Screen_Height_Ratio);
-            //Vector2 NewMouseCoordinates = new Vector2(ThisWillBeX, ThisWillBeY); //Puts them together
-
-
-            //// Is the key down?
-            //if (newState.IsKeyDown(Keys.A))                                      //press A to change full screen mode or not
-            //{
-            //    // If not down last update, key has just been pressed.
-            //    if (!this.oldState.IsKeyDown(Keys.A))
-            //    {
-            //        this.ChangeFullScreenMode(graphics);
-            //    }
-            //}
-
-            //else if (this.oldState.IsKeyDown(Keys.A))
-            //{
-            //    // Key was down last update, but not down now, so
-            //    // it has just been released.
-            //}
-
-            ////----------------------------------------------------------new possibility-----------------------------------------
-            ////Depending on which gamestate boolean is tru, it checks if the mouse clicked in one of the areas linked with it.
-
-            //if (newMouse.LeftButton == ButtonState.Pressed)
-            //{
-            //    // If not down last update, key has just been pressed.
-            //    if (this.oldMouse.LeftButton != ButtonState.Pressed)
-            //    {
-            //        if (this.Main_Game == true) //Every pin gets folded
-            //        {
-            //            foreach (Monument Monumentje in Monumentenlijst)
-            //            {
-            //                Monumentje.Pin_Un_Folded = false;
-            //            }
-
-            //            foreach (Monument Monumentje in Monumentenlijst) //If mouse is in one of the rectangles, unfold that pin
-            //            {
-            //                if (Monumentje.Click_area.Contains(NewMouseCoordinates.X, NewMouseCoordinates.Y))
-            //                {
-            //                    Monumentje.ToggleFoldPin();
-            //                }
-            //            }
-
-            //            //If pressed on the word menu, change gamestate booleans leading to main menu
-            //            if (Main_menu_instance.Click_area_exit.Contains(NewMouseCoordinates.X, NewMouseCoordinates.Y)) { this.NextStep("Main_Menu"); }
-            //        }
-
-            //        else if (this.Main_Menu == true) //If in main menu, determine next gamestate
-            //        {
-            //            if (Main_menu_instance.Click_area_exit.Contains(NewMouseCoordinates.X, NewMouseCoordinates.Y)) { Program.Game.Exit(); }
-            //            if (Main_menu_instance.Click_area_Start_map.Contains(NewMouseCoordinates.X, NewMouseCoordinates.Y)) { this.NextStep("Main_Game"); }
-            //            if (Main_menu_instance.Click_area_start_graph.Contains(NewMouseCoordinates.X, NewMouseCoordinates.Y)) { this.NextStep("Windows_Form"); }
-
-
-            //        }
-
-            //    }
-            //}
-
-            //else if (this.oldMouse.LeftButton == ButtonState.Pressed) { }
-
-            ////----------------------------------------------------------new possibility-----------------------------------------
-
-
-
-            //// Update saved state.
-            //this.oldState = newState;
-            //this.oldMouse = newMouse;
 
         }
 

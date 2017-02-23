@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,7 +12,8 @@ namespace TetrisCalculatingGame
         public KeyboardState oldState;             //Makes it possible to compare the old keyboard state with the new one
         public MouseState oldMouse;                //Makes it possible to compare the old mouse state with the new one
         public SpriteBatch spriteBatch;
-        public Dictionary<string, Texture2D> All_Textures = new Dictionary<string, Texture2D>();
+        public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures = new Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>>();
+        public List<SpritefontText> AllSpritefontTexts = new List<SpritefontText>();
         public SpriteFont Arial_32 = null;
         public int screen_depth, screen_width;
         public GameState gameState;
@@ -21,7 +23,7 @@ namespace TetrisCalculatingGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            gameState = new GameState(All_Textures, oldState, oldMouse);
+            gameState = new GameState(All_Textures, oldState, oldMouse); //All textures have a key, with as return: texture, starting point, clickarea
         }
 
         protected override void Initialize()
@@ -36,8 +38,6 @@ namespace TetrisCalculatingGame
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //Set xna resolution height to curr screen resolution
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;   //Set xna resolution width to curr screen resolution
             graphics.ApplyChanges();
-            screen_depth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            screen_width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         }
 
         /// <summary>
@@ -46,12 +46,22 @@ namespace TetrisCalculatingGame
         /// </summary>
         protected override void LoadContent()
         {
+            screen_depth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;                       //Get screen height
+            screen_width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
-            gameState.All_Textures.Add("f1car", Content.Load<Texture2D>("formulacar.jpg"));
-
-
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
+            Vector2 BackToMenuPos = new Vector2((float)2.0 / 5 * screen_width, (float)1.0 / 3 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Back to menu", BackToMenuPos, new Rectangle((int)BackToMenuPos.X, (int)BackToMenuPos.Y, (int)Arial_32.MeasureString("Back to menu").X, (int)Arial_32.MeasureString("Back to menu").Y), Color.Black));
+
+            //All textures have a key, with as return: texture, starting point, clickarea
+            Vector2 f1carPos = new Vector2((float)1.0 / 8 * screen_width, (float)1.0 / 2 * screen_depth);
+            Texture2D jpgf1car = Content.Load<Texture2D>("formulacar.jpg");
+            gameState.All_Textures.Add("f1car", new Tuple <Texture2D, Vector2, Rectangle>(jpgf1car, f1carPos, new Rectangle((int)f1carPos.X, (int)f1carPos.Y, jpgf1car.Width, jpgf1car.Height)));
+
+
+            
             
 
 
@@ -81,11 +91,11 @@ namespace TetrisCalculatingGame
 
             if (gameState.Menu == true)
             {
-                
+                gameState.CheckMenuClicks(graphics);
             }
             else if (gameState.In_Game == true)
             {
-                
+                gameState.CheckGameClicks(graphics);
             }
 
             // TODO: Add your update logic here
@@ -103,8 +113,8 @@ namespace TetrisCalculatingGame
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.DrawString(Arial_32, "Back to menu", new Vector2((float)2.0/5*(float)screen_width, (float)1.0/3*(float)screen_depth), Color.Black);
-            spriteBatch.Draw(gameState.All_Textures["f1car"], new Vector2((float)1.0/8*screen_width, (float)1.0/2*screen_depth));
+            spriteBatch.DrawString(AllSpritefontTexts[0].TextType, AllSpritefontTexts[0].StringToShow, AllSpritefontTexts[0].StringStartPos, AllSpritefontTexts[0].Colour);
+            spriteBatch.Draw(gameState.All_Textures["f1car"].Item1, gameState.All_Textures["f1car"].Item2);
             spriteBatch.End();
             base.Draw(gameTime);
         }
