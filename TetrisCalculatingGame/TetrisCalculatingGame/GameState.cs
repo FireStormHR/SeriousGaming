@@ -11,17 +11,19 @@ namespace TetrisCalculatingGame
 {
     public class GameState
     {
-        public bool Menu, In_Game;
+        private bool Menu, In_Game;
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures;
+        public List<SpritefontText> AllSpritefontTexts;
         public KeyboardState OldState;
         public MouseState OldMouse;
 
-        public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, KeyboardState oldState, MouseState oldMouse)
+        public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, List<SpritefontText> AllSpritefontTexts, KeyboardState oldState, MouseState oldMouse)
         {
             this.Menu = true;
             this.In_Game = false;
 
             this.All_Textures = All_textures;
+            this.AllSpritefontTexts = AllSpritefontTexts;
             this.OldState = oldState;
             this.OldMouse = oldMouse;
         }
@@ -70,14 +72,14 @@ namespace TetrisCalculatingGame
             }
 
             //----------------------------------------------------------new possibility-----------------------------------------
-            //Depending on which gamestate boolean is tru, it checks if the mouse clicked in one of the areas linked with it.
+            //Depending on which gamestate boolean is true, it checks if the mouse clicked in one of the areas linked with it.
 
             if (newMouse.LeftButton == ButtonState.Pressed)
             {
                 // If not down last update, key has just been pressed.
                 if (this.OldMouse.LeftButton != ButtonState.Pressed)
                 {
-                    
+                    if ()
 
                 }
             }

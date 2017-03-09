@@ -23,7 +23,7 @@ namespace TetrisCalculatingGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            gameState = new GameState(All_Textures, oldState, oldMouse); //All textures have a key, with as return: texture, starting point, clickarea
+            gameState = new GameState(All_Textures, AllSpritefontTexts, oldState, oldMouse); //All textures have a key, with as return: texture, starting point, clickarea
         }
 
         protected override void Initialize()
@@ -34,7 +34,7 @@ namespace TetrisCalculatingGame
             oldState = Keyboard.GetState();
             oldMouse = Mouse.GetState();
             IsMouseVisible = true; //You can see the cursor
-            //graphics.IsFullScreen = true;                                                                //disabled for developing reasons
+            //graphics.IsFullScreen = true;                                                                //DISABLED FOR DEVELOPING REASONS
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; //Set xna resolution height to curr screen resolution
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;   //Set xna resolution width to curr screen resolution
             graphics.ApplyChanges();
