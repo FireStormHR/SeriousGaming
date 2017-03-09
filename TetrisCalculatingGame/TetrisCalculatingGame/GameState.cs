@@ -43,7 +43,7 @@ namespace TetrisCalculatingGame
 
         //Until here, all methods and get setters are for changing the state. Beneath are all the inputchecks
 
-        public void CheckMenuClicks(GraphicsDeviceManager graphics)
+        public void CheckMenuClicks(GraphicsDeviceManager graphics, Game1 gamepje)
         {
             //VOORBEELD
 
@@ -53,16 +53,16 @@ namespace TetrisCalculatingGame
 
 
             // Is the key down?
-            if (newState.IsKeyDown(Keys.A))                                      //press A to change full screen mode or not
+            if (newState.IsKeyDown(Keys.Escape))                                      //press A to change full screen mode or not
             {
                 // If not down last update, key has just been pressed.
-                if (!this.OldState.IsKeyDown(Keys.A))
+                if (!this.OldState.IsKeyDown(Keys.Escape))
                 {
-                    //d
+                    gamepje.Exit();
                 }
             }
 
-            else if (this.OldState.IsKeyDown(Keys.A))
+            else if (this.OldState.IsKeyDown(Keys.Escape))
             {
                 // Key was down last update, but not down now, so
                 // it has just been released.
@@ -80,6 +80,11 @@ namespace TetrisCalculatingGame
                     {
                         this.SetStateToGame();
                         
+                    }
+
+                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        gamepje.Exit();
                     }
 
                 }
@@ -100,6 +105,53 @@ namespace TetrisCalculatingGame
 
         public void CheckGameClicks(GraphicsDeviceManager graphics)
         {
+            KeyboardState newState = Keyboard.GetState();
+            MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
+            Vector2 NewMouseCoordinates = new Vector2(newMouse.X, newMouse.Y);
+
+
+            // Is the key down?
+            if (newState.IsKeyDown(Keys.Escape))                                      //press A to change full screen mode or not
+            {
+                // If not down last update, key has just been pressed.
+                if (!this.OldState.IsKeyDown(Keys.Escape))
+                {
+                    this.SetStateToMenu();
+                }
+            }
+
+            else if (this.OldState.IsKeyDown(Keys.Escape))
+            {
+                // Key was down last update, but not down now, so
+                // it has just been released.
+            }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+            //Depending on which gamestate boolean is true, it checks if the mouse clicked in one of the areas linked with it.
+
+            if (newMouse.LeftButton == ButtonState.Pressed)
+            {
+                // If not down last update, key has just been pressed.
+                if (this.OldMouse.LeftButton != ButtonState.Pressed)
+                {
+
+                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        this.SetStateToMenu();
+                    }
+
+                }
+            }
+
+            else if (this.OldMouse.LeftButton == ButtonState.Pressed) { }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+
+
+
+            // Update saved state.
+            this.OldState = newState;
+            this.OldMouse = newMouse;
 
         }
 

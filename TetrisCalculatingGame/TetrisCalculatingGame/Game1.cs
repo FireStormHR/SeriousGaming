@@ -54,7 +54,10 @@ namespace TetrisCalculatingGame
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
             Vector2 ToTheGamePos = new Vector2((float)2.0 / 5 * screen_width, (float)1.0 / 3 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "To the game", ToTheGamePos, new Rectangle((int)ToTheGamePos.X, (int)ToTheGamePos.Y, (int)Arial_32.MeasureString("To the game").X, (int)Arial_32.MeasureString("To the game").Y), Color.Black));
-
+            Vector2 ScoreTextPos = new Vector2((float)4.0 / 5 * screen_width, (float)1.0 / 15 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Score:", ScoreTextPos, new Rectangle((int)ScoreTextPos.X, (int)ScoreTextPos.Y, (int)Arial_32.MeasureString("Score:").X, (int)Arial_32.MeasureString("Score:").Y), Color.Black));
+            Vector2 EscPos = new Vector2((float)1.0 / 20 * screen_width, (float)1.0 / 20 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Esc", EscPos, new Rectangle((int)EscPos.X, (int)EscPos.Y, (int)Arial_32.MeasureString("Esc").X, (int)Arial_32.MeasureString("Esc").Y), Color.Black));
 
 
 
@@ -96,7 +99,7 @@ namespace TetrisCalculatingGame
 
             if (gameState.Menu == true)
             {
-                gameState.CheckMenuClicks(graphics);
+                gameState.CheckMenuClicks(graphics, this);
             }
             else if (gameState.In_Game == true)
             {
@@ -121,10 +124,13 @@ namespace TetrisCalculatingGame
             if (gameState.Menu == true)
             {
                 spriteBatch.DrawString(AllSpritefontTexts[0].TextType, AllSpritefontTexts[0].StringToShow, AllSpritefontTexts[0].StringStartPos, AllSpritefontTexts[0].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
                 spriteBatch.Draw(gameState.All_Textures["f1car"].Item1, gameState.All_Textures["f1car"].Item2);
             }
             if (gameState.In_Game == true)
             {
+                spriteBatch.DrawString(AllSpritefontTexts[1].TextType, AllSpritefontTexts[1].StringToShow, AllSpritefontTexts[1].StringStartPos, AllSpritefontTexts[1].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
 
             }
 
