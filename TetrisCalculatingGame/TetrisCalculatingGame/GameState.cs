@@ -11,7 +11,7 @@ namespace TetrisCalculatingGame
 {
     public class GameState
     {
-        private bool Menu, In_Game;
+        public bool Menu, In_Game;
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures;
         public List<SpritefontText> AllSpritefontTexts;
         public KeyboardState OldState;
@@ -49,9 +49,6 @@ namespace TetrisCalculatingGame
 
             KeyboardState newState = Keyboard.GetState();
             MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
-
-
-
             Vector2 NewMouseCoordinates = new Vector2(newMouse.X, newMouse.Y);
 
 
@@ -79,7 +76,11 @@ namespace TetrisCalculatingGame
                 // If not down last update, key has just been pressed.
                 if (this.OldMouse.LeftButton != ButtonState.Pressed)
                 {
-                    if ()
+                    if (AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        this.SetStateToGame();
+                        
+                    }
 
                 }
             }

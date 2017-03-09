@@ -52,8 +52,13 @@ namespace TetrisCalculatingGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
-            Vector2 BackToMenuPos = new Vector2((float)2.0 / 5 * screen_width, (float)1.0 / 3 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Back to menu", BackToMenuPos, new Rectangle((int)BackToMenuPos.X, (int)BackToMenuPos.Y, (int)Arial_32.MeasureString("Back to menu").X, (int)Arial_32.MeasureString("Back to menu").Y), Color.Black));
+            Vector2 ToTheGamePos = new Vector2((float)2.0 / 5 * screen_width, (float)1.0 / 3 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "To the game", ToTheGamePos, new Rectangle((int)ToTheGamePos.X, (int)ToTheGamePos.Y, (int)Arial_32.MeasureString("To the game").X, (int)Arial_32.MeasureString("To the game").Y), Color.Black));
+
+
+
+
+
 
             //All textures have a key, with as return: texture, starting point, clickarea
             Vector2 f1carPos = new Vector2((float)1.0 / 8 * screen_width, (float)1.0 / 2 * screen_depth);
@@ -113,8 +118,17 @@ namespace TetrisCalculatingGame
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.DrawString(AllSpritefontTexts[0].TextType, AllSpritefontTexts[0].StringToShow, AllSpritefontTexts[0].StringStartPos, AllSpritefontTexts[0].Colour);
-            spriteBatch.Draw(gameState.All_Textures["f1car"].Item1, gameState.All_Textures["f1car"].Item2);
+            if (gameState.Menu == true)
+            {
+                spriteBatch.DrawString(AllSpritefontTexts[0].TextType, AllSpritefontTexts[0].StringToShow, AllSpritefontTexts[0].StringStartPos, AllSpritefontTexts[0].Colour);
+                spriteBatch.Draw(gameState.All_Textures["f1car"].Item1, gameState.All_Textures["f1car"].Item2);
+            }
+            if (gameState.In_Game == true)
+            {
+
+            }
+
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
