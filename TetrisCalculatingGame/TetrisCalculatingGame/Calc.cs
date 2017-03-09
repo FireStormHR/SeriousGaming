@@ -28,17 +28,17 @@ namespace TetrisCalculatingGame
             int maxAllowedNumber = 9999999;
 
             if (this.Level == 1 || this.Level == 3)
-                maxAllowedNumber = 9;
+                maxAllowedNumber = 10; //will result in max 9 in the random generator
             else if (this.Level == 2)
-                maxAllowedNumber = 99;
+                maxAllowedNumber = 100; //will result in max 100 in the random generator
 
             int firstNumber = random.Next(1, maxAllowedNumber);
             int secondNumber = 9999999;  // assigned based on operator
 
-            double operatorInt = random.Next(0, 1); // 0(-) or 1(+)
+            double operatorInt = random.Next(0, 2); // 0(-) or 1(+)
 
             if (this.Level == 3)
-                operatorInt = random.Next(0, 2); // can either be 0(-), 1(+), 2(*) or 3(:)
+                operatorInt = random.Next(2, 4); // 2(*) or 3(:)
 
             if (operatorInt <= 1)
             {
