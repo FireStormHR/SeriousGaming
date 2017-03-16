@@ -147,8 +147,10 @@ namespace TetrisCalculatingGame
 
             //----------------------------------------------------------new possibility-----------------------------------------
 
+            //Move sumbox to left or right
+
             // Is the key down?
-            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.Left)) //press A to change full screen mode or not
+            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.Left)) 
             {
                 // If not down last update, key has just been pressed.
 
@@ -159,6 +161,7 @@ namespace TetrisCalculatingGame
                 // Key was down last update, but not down now, so
                 // it has just been released.
                 Vector2 temp2 = new Vector2(this.All_Textures["SumBox"].Item2.X, this.All_Textures["SumBox"].Item2.Y); //coor of sumbox
+
                 if (this.OldState.IsKeyDown(Keys.Right) && !newState.IsKeyDown(Keys.Right) && temp2.X < 1030)
                 {
                     temp2.X = temp2.X + 81;
@@ -173,16 +176,26 @@ namespace TetrisCalculatingGame
                 }
 
             }
-
-
-
-
-
-
-
+            
+            //Let the sumbox go down
             var temp = this.All_Textures["SumBox"].Item2;
             temp.Y = temp.Y + 1;
+            if (temp.Y > 780)
+            {
+                //Check for right answer here
+
+                temp.Y = 30;
+            }
+
             this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp, gamepje.All_Textures["SumBox"].Item3);
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+
+
+
+
+
+
 
             // Update saved state.
             this.OldState = newState;
