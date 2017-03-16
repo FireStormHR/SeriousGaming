@@ -103,7 +103,7 @@ namespace TetrisCalculatingGame
 
         }
 
-        public void CheckGameClicks(GraphicsDeviceManager graphics)
+        public void CheckGameClicks(GraphicsDeviceManager graphics, Game1 gamepje)
         {
             KeyboardState newState = Keyboard.GetState();
             MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
@@ -111,7 +111,7 @@ namespace TetrisCalculatingGame
 
 
             // Is the key down?
-            if (newState.IsKeyDown(Keys.Escape))                                      //press A to change full screen mode or not
+            if (newState.IsKeyDown(Keys.Escape))                                      
             {
                 // If not down last update, key has just been pressed.
                 if (!this.OldState.IsKeyDown(Keys.Escape))
@@ -147,7 +147,42 @@ namespace TetrisCalculatingGame
 
             //----------------------------------------------------------new possibility-----------------------------------------
 
+            // Is the key down?
+            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.Left)) //press A to change full screen mode or not
+            {
+                // If not down last update, key has just been pressed.
 
+            }
+
+            else if (this.OldState.IsKeyDown(Keys.Right) || this.OldState.IsKeyDown(Keys.Left))
+            {
+                // Key was down last update, but not down now, so
+                // it has just been released.
+                Vector2 temp2 = new Vector2(this.All_Textures["SumBox"].Item2.X, this.All_Textures["SumBox"].Item2.Y); //coor of sumbox
+                if (this.OldState.IsKeyDown(Keys.Right) && !newState.IsKeyDown(Keys.Right) && temp2.X < 1030)
+                {
+                    temp2.X = temp2.X + 81;
+                    this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp2, gamepje.All_Textures["SumBox"].Item3);
+
+                }
+
+                else if (this.OldState.IsKeyDown(Keys.Left) && !newState.IsKeyDown(Keys.Left) && temp2.X > 301)
+                {
+                    temp2.X = temp2.X - 81;
+                    this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp2, gamepje.All_Textures["SumBox"].Item3);
+                }
+
+            }
+
+
+
+
+
+
+
+            var temp = this.All_Textures["SumBox"].Item2;
+            temp.Y = temp.Y + 1;
+            this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp, gamepje.All_Textures["SumBox"].Item3);
 
             // Update saved state.
             this.OldState = newState;

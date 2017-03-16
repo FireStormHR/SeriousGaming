@@ -58,11 +58,11 @@ namespace TetrisCalculatingGame
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Score:", ScoreTextPos, new Rectangle((int)ScoreTextPos.X, (int)ScoreTextPos.Y, (int)Arial_32.MeasureString("Score:").X, (int)Arial_32.MeasureString("Score:").Y), Color.Black));
             Vector2 EscPos = new Vector2((float)1.0 / 20 * screen_width, (float)1.0 / 20 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Esc", EscPos, new Rectangle((int)EscPos.X, (int)EscPos.Y, (int)Arial_32.MeasureString("Esc").X, (int)Arial_32.MeasureString("Esc").Y), Color.Black));
-            //Not yet used words below
-            Vector2 ChooseLevel = new Vector2((float)3.7 / 5 * screen_width, (float)1.0 / 12 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Choose level:", ChooseLevel, new Rectangle((int)ChooseLevel.X, (int)ChooseLevel.Y, (int)Arial_32.MeasureString("Choose level:").X, (int)Arial_32.MeasureString("Choose level:").Y), Color.Black));
-            Vector2 FirstLevel = new Vector2((float)3.7 / 5 * screen_width, (float)1.0 / 12 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "level 1", FirstLevel, new Rectangle((int)FirstLevel.X, (int)FirstLevel.Y, (int)Arial_32.MeasureString("level 1").X, (int)Arial_32.MeasureString("level 1").Y), Color.Black));
+            Vector2 Exercise = new Vector2((float)3.83 / 5 * screen_width, (float)1.0 / (float)8.9 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Exercise:", Exercise, new Rectangle((int)Exercise.X, (int)Exercise.Y, (int)Arial_32.MeasureString("Exercise:").X, (int)Arial_32.MeasureString("Exercise:").Y), Color.Black));
+            //Not yet used words below #4
+            Vector2 TheSum = new Vector2((float)3.83 / 5 * screen_width + AllSpritefontTexts[3].ClickArea.Width, (float)1.0 / (float)8.9 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "level 1", TheSum, new Rectangle((int)TheSum.X, (int)TheSum.Y, (int)Arial_32.MeasureString("level 1").X, (int)Arial_32.MeasureString("level 1").Y), Color.Black));
 
 
 
@@ -73,10 +73,13 @@ namespace TetrisCalculatingGame
             Texture2D jpgf1car = Content.Load<Texture2D>("formulacar.jpg");
             gameState.All_Textures.Add("f1car", new Tuple <Texture2D, Vector2, Rectangle>(jpgf1car, f1carPos, new Rectangle((int)f1carPos.X, (int)f1carPos.Y, jpgf1car.Width, jpgf1car.Height)));
 
-            Vector2 RosterPos = new Vector2((float)1.0 / 4 * screen_width, (float)1.0 / 25 * screen_depth);
-            Texture2D RosterPNG = Content.Load<Texture2D>("TheMatrix.png");
+            Vector2 RosterPos = new Vector2((float)300, (float)30);
+            Texture2D RosterPNG = Content.Load<Texture2D>("TheMatrix.png"); //Roster is 785 hoog en 812 breed, begint bij x 300 en y 30
             gameState.All_Textures.Add("Roster", new Tuple<Texture2D, Vector2, Rectangle>(RosterPNG, RosterPos, new Rectangle((int)RosterPos.X, (int)RosterPos.Y, RosterPNG.Width, RosterPNG.Height)));
 
+            Vector2 SumBoxPos = new Vector2((float)301, (float)30);
+            Texture2D SumBoxPNG = Content.Load<Texture2D>("SumBox.png"); //Sumbox is 785 hoog en 81 breed, begint bij x 301 en y 30
+            gameState.All_Textures.Add("SumBox", new Tuple<Texture2D, Vector2, Rectangle>(SumBoxPNG, SumBoxPos, new Rectangle((int)SumBoxPos.X, (int)SumBoxPos.Y, SumBoxPNG.Width, SumBoxPNG.Height)));
 
 
 
@@ -114,7 +117,7 @@ namespace TetrisCalculatingGame
             }
             else if (gameState.In_Game == true)
             {
-                gameState.CheckGameClicks(graphics);
+                gameState.CheckGameClicks(graphics, this);
             }
 
             // TODO: Add your update logic here
@@ -142,8 +145,9 @@ namespace TetrisCalculatingGame
             {
                 spriteBatch.DrawString(AllSpritefontTexts[1].TextType, AllSpritefontTexts[1].StringToShow, AllSpritefontTexts[1].StringStartPos, AllSpritefontTexts[1].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[3].TextType, AllSpritefontTexts[3].StringToShow, AllSpritefontTexts[3].StringStartPos, AllSpritefontTexts[3].Colour);
                 spriteBatch.Draw(gameState.All_Textures["Roster"].Item1, gameState.All_Textures["Roster"].Item2);
-
+                spriteBatch.Draw(gameState.All_Textures["SumBox"].Item1, gameState.All_Textures["SumBox"].Item2);
             }
 
 
