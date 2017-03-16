@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TetrisCalculatingGame
 {
-    class Calc
+    public class Calc
     {
         public Calc(int level)
         {

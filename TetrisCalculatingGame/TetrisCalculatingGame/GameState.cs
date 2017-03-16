@@ -176,26 +176,36 @@ namespace TetrisCalculatingGame
                 }
 
             }
-            
-            //Let the sumbox go down
-            var temp = this.All_Textures["SumBox"].Item2;
-            temp.Y = temp.Y + 1;
-            if (temp.Y > 780)
-            {
-                //Check for right answer here
-
-                temp.Y = 30;
-            }
-
-            this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp, gamepje.All_Textures["SumBox"].Item3);
 
             //----------------------------------------------------------new possibility-----------------------------------------
 
 
 
+            //Let the sumbox go down
+            var temp = this.All_Textures["SumBox"].Item2;
+            temp.Y = temp.Y + 1;
+
+            //Check for right answer here
+            if (temp.Y > 780)
+            {
+                
+                float AnswerOfUser = (temp.X - 301) / 81;
+
+                if (gamepje.calc.SomAnswer == AnswerOfUser)
+                {
+                    gamepje.PlayerScore = gamepje.PlayerScore + 1;
+                    gamepje.AllSpritefontTexts[5].StringToShow = gamepje.PlayerScore.ToString();
+                }
 
 
+                gamepje.calc = new Calc(2);
+                gamepje.AllSpritefontTexts[4].StringToShow = gamepje.calc.StringSom;
+                temp.Y = 30;
+            }
 
+            this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp, gamepje.All_Textures["SumBox"].Item3);
+
+            
 
             // Update saved state.
             this.OldState = newState;
