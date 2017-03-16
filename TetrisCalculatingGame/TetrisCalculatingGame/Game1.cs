@@ -15,7 +15,7 @@ namespace TetrisCalculatingGame
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures = new Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>>();
         public List<SpritefontText> AllSpritefontTexts = new List<SpritefontText>();
         public SpriteFont Arial_32 = null;
-        public int screen_depth, screen_width, PlayerScore;
+        public int screen_depth, screen_width, PlayerScore, Lifes;
         public GameState gameState;
         public Calc calc;
 
@@ -52,6 +52,7 @@ namespace TetrisCalculatingGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             PlayerScore = 0;
+            Lifes = 5;
             
             //#0
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
@@ -82,14 +83,22 @@ namespace TetrisCalculatingGame
             Vector2 f1carPos = new Vector2((float)1.0 / 8 * screen_width, (float)1.0 / 2 * screen_depth);
             Texture2D jpgf1car = Content.Load<Texture2D>("formulacar.jpg");
             gameState.All_Textures.Add("f1car", new Tuple <Texture2D, Vector2, Rectangle>(jpgf1car, f1carPos, new Rectangle((int)f1carPos.X, (int)f1carPos.Y, jpgf1car.Width, jpgf1car.Height)));
-
+            //#
             Vector2 RosterPos = new Vector2((float)300, (float)30);
             Texture2D RosterPNG = Content.Load<Texture2D>("TheMatrix.png"); //Roster is 785 hoog en 812 breed, begint bij x 300 en y 30
             gameState.All_Textures.Add("Roster", new Tuple<Texture2D, Vector2, Rectangle>(RosterPNG, RosterPos, new Rectangle((int)RosterPos.X, (int)RosterPos.Y, RosterPNG.Width, RosterPNG.Height)));
-
+            //#
             Vector2 SumBoxPos = new Vector2((float)301, (float)30);
             Texture2D SumBoxPNG = Content.Load<Texture2D>("SumBox.png"); //Sumbox is 785 hoog en 81 breed, begint bij x 301 en y 30
             gameState.All_Textures.Add("SumBox", new Tuple<Texture2D, Vector2, Rectangle>(SumBoxPNG, SumBoxPos, new Rectangle((int)SumBoxPos.X, (int)SumBoxPos.Y, SumBoxPNG.Width, SumBoxPNG.Height)));
+            //#
+            Vector2 FirstHeartPos = new Vector2((float)2.5 / 4 * screen_width, (float)1.0 / (float)2.5 * screen_depth);
+            Texture2D HeartPNG = Content.Load<Texture2D>("heart.png"); 
+            gameState.All_Textures.Add("Heart", new Tuple<Texture2D, Vector2, Rectangle>(HeartPNG, FirstHeartPos, new Rectangle((int)FirstHeartPos.X, (int)FirstHeartPos.Y, HeartPNG.Width, HeartPNG.Height)));
+
+
+
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -132,7 +141,7 @@ namespace TetrisCalculatingGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightBlue);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
@@ -154,6 +163,11 @@ namespace TetrisCalculatingGame
 
                 spriteBatch.Draw(gameState.All_Textures["Roster"].Item1, gameState.All_Textures["Roster"].Item2);
                 spriteBatch.Draw(gameState.All_Textures["SumBox"].Item1, gameState.All_Textures["SumBox"].Item2);
+                for (int x = 0; x < Lifes; x = x + 1)
+                {
+                    spriteBatch.Draw(gameState.All_Textures["Heart"].Item1, new Vector2(gameState.All_Textures["Heart"].Item2.X + 100*x, gameState.All_Textures["Heart"].Item2.Y));
+                }
+
             }
 
 

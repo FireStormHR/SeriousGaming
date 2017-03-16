@@ -203,9 +203,13 @@ namespace TetrisCalculatingGame
                     if (gamepje.PlayerScore %5 == 0)
                     {
                         this.Velocity = this.Velocity + 1;
-                        this.NotifyFramesCounter = NotifyFramesCounter+1;
+                        this.NotifyFramesCounter = NotifyFramesCounter + 1;
                     }
 
+                }
+                else
+                {
+                    gamepje.Lifes = gamepje.Lifes - 1;
                 }
 
 
