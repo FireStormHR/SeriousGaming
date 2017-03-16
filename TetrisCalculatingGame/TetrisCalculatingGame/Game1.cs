@@ -105,6 +105,9 @@ namespace TetrisCalculatingGame
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            Calc calc = new Calc(2); 
+            Console.WriteLine(calc.StringSom + " heeft als antwoord: " + calc.SomAnswer);
+
             if (gameState.Menu == true)
             {
                 gameState.CheckMenuClicks(graphics, this);
