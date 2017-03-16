@@ -57,19 +57,25 @@ namespace TetrisCalculatingGame
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
             Vector2 ToTheGamePos = new Vector2((float)2.0 / 5 * screen_width, (float)1.0 / 3 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "To the game", ToTheGamePos, new Rectangle((int)ToTheGamePos.X, (int)ToTheGamePos.Y, (int)Arial_32.MeasureString("To the game").X, (int)Arial_32.MeasureString("To the game").Y), Color.Black));
+            //#1
             Vector2 ScoreTextPos = new Vector2((float)4.0 / 5 * screen_width, (float)1.0 / 15 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Score:", ScoreTextPos, new Rectangle((int)ScoreTextPos.X, (int)ScoreTextPos.Y, (int)Arial_32.MeasureString("Score:").X, (int)Arial_32.MeasureString("Score:").Y), Color.Black));
+            //#2
             Vector2 EscPos = new Vector2((float)1.0 / 20 * screen_width, (float)1.0 / 20 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Esc", EscPos, new Rectangle((int)EscPos.X, (int)EscPos.Y, (int)Arial_32.MeasureString("Esc").X, (int)Arial_32.MeasureString("Esc").Y), Color.Black));
+            //#3
             Vector2 Exercise = new Vector2((float)3.66 / 5 * screen_width, (float)1.0 / (float)8.9 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Exercise:", Exercise, new Rectangle((int)Exercise.X, (int)Exercise.Y, (int)Arial_32.MeasureString("Exercise:").X, (int)Arial_32.MeasureString("Exercise:").Y), Color.Black));
             //#4
             calc = new Calc(2);
             Vector2 TheSum = new Vector2((float)3.69 / 5 * screen_width + AllSpritefontTexts[3].ClickArea.Width, (float)1.0 / (float)8.9 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, calc.StringSom, TheSum, new Rectangle((int)TheSum.X, (int)TheSum.Y, (int)Arial_32.MeasureString(calc.StringSom).X, (int)Arial_32.MeasureString(calc.StringSom).Y), Color.Black));
+            //#5
             Vector2 TheScore = new Vector2((float)4.0 / 5 * screen_width + AllSpritefontTexts[1].ClickArea.Width, (float)1.0 / (float)15 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, PlayerScore.ToString(), TheScore, new Rectangle((int)TheScore.X, (int)TheScore.Y, (int)Arial_32.MeasureString(PlayerScore.ToString()).X, (int)Arial_32.MeasureString(PlayerScore.ToString()).Y), Color.Black));
-
+            //#6
+            Vector2 LvlUpPos = new Vector2((float)3.55 / 5 * screen_width, (float)1.0 / (float)4 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Level up! Faster!", LvlUpPos, new Rectangle((int)LvlUpPos.X, (int)LvlUpPos.Y, (int)Arial_32.MeasureString("Level up! Faster!").X, (int)Arial_32.MeasureString("Level up! Faster!").Y), Color.Red));
 
 
             //All textures have a key, with as return: texture, starting point, clickarea
@@ -143,6 +149,9 @@ namespace TetrisCalculatingGame
                 spriteBatch.DrawString(AllSpritefontTexts[3].TextType, AllSpritefontTexts[3].StringToShow, AllSpritefontTexts[3].StringStartPos, AllSpritefontTexts[3].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[4].TextType, AllSpritefontTexts[4].StringToShow, AllSpritefontTexts[4].StringStartPos, AllSpritefontTexts[4].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[5].TextType, AllSpritefontTexts[5].StringToShow, AllSpritefontTexts[5].StringStartPos, AllSpritefontTexts[5].Colour);
+                if (gameState.NotifyFramesCounter!=0)
+                    spriteBatch.DrawString(AllSpritefontTexts[6].TextType, AllSpritefontTexts[6].StringToShow, AllSpritefontTexts[6].StringStartPos, AllSpritefontTexts[6].Colour);
+
                 spriteBatch.Draw(gameState.All_Textures["Roster"].Item1, gameState.All_Textures["Roster"].Item2);
                 spriteBatch.Draw(gameState.All_Textures["SumBox"].Item1, gameState.All_Textures["SumBox"].Item2);
             }

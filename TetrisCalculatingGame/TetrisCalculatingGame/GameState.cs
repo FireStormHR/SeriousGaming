@@ -16,6 +16,7 @@ namespace TetrisCalculatingGame
         public List<SpritefontText> AllSpritefontTexts;
         public KeyboardState OldState;
         public MouseState OldMouse;
+        public int Velocity, NotifyFramesCounter;
 
         public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, List<SpritefontText> AllSpritefontTexts, KeyboardState oldState, MouseState oldMouse)
         {
@@ -26,6 +27,8 @@ namespace TetrisCalculatingGame
             this.AllSpritefontTexts = AllSpritefontTexts;
             this.OldState = oldState;
             this.OldMouse = oldMouse;
+            this.Velocity = 1;
+            this.NotifyFramesCounter = 0;
         }
 
         public void SetStateToMenu()
@@ -185,7 +188,7 @@ namespace TetrisCalculatingGame
 
             //Let the sumbox go down
             var temp = this.All_Textures["SumBox"].Item2;
-            temp.Y = temp.Y + 1;
+            temp.Y = temp.Y + this.Velocity;
 
             //Check for right answer here
             if (temp.Y > 780)
@@ -197,12 +200,28 @@ namespace TetrisCalculatingGame
                 {
                     gamepje.PlayerScore = gamepje.PlayerScore + 1;
                     gamepje.AllSpritefontTexts[5].StringToShow = gamepje.PlayerScore.ToString();
+                    if (gamepje.PlayerScore %5 == 0)
+                    {
+                        this.Velocity = this.Velocity + 1;
+                        this.NotifyFramesCounter = NotifyFramesCounter+1;
+                    }
+
                 }
 
 
                 gamepje.calc = new Calc(2);
                 gamepje.AllSpritefontTexts[4].StringToShow = gamepje.calc.StringSom;
                 temp.Y = 30;
+            }
+
+            //Give notification about block speeding up
+            if (NotifyFramesCounter != 0)
+            {
+                this.NotifyFramesCounter = NotifyFramesCounter + 1;
+                if (this.NotifyFramesCounter > 120)
+                {
+                    this.NotifyFramesCounter = 0;
+                }
             }
 
             this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp, gamepje.All_Textures["SumBox"].Item3);
