@@ -11,7 +11,7 @@ namespace TetrisCalculatingGame
 {
     public class GameState
     {
-        public bool Menu, In_Game;
+        public bool Menu, In_Game, EndScreen;
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures;
         public List<SpritefontText> AllSpritefontTexts;
         public KeyboardState OldState;
@@ -22,6 +22,7 @@ namespace TetrisCalculatingGame
         {
             this.Menu = true;
             this.In_Game = false;
+            this.EndScreen = false;
 
             this.All_Textures = All_textures;
             this.AllSpritefontTexts = AllSpritefontTexts;
@@ -35,6 +36,7 @@ namespace TetrisCalculatingGame
         {
             this.Menu = true;
             this.In_Game = false;
+            this.EndScreen = false;
             
         }
 
@@ -42,6 +44,13 @@ namespace TetrisCalculatingGame
         {
             this.Menu = false;
             this.In_Game = true;
+            this.EndScreen = false;
+        }
+        public void ResetTheGame(GraphicsDeviceManager graphics, Game1 gamepje)
+        {
+            this.Velocity = 1;
+            gamepje.Lifes = 5;
+            gamepje.PlayerScore = 0;
         }
 
         //Until here, all methods and get setters are for changing the state. Beneath are all the inputchecks
@@ -56,7 +65,7 @@ namespace TetrisCalculatingGame
 
 
             // Is the key down?
-            if (newState.IsKeyDown(Keys.Escape))                                      //press A to change full screen mode or not
+            if (newState.IsKeyDown(Keys.Escape))                                      
             {
                 // If not down last update, key has just been pressed.
                 if (!this.OldState.IsKeyDown(Keys.Escape))
@@ -210,6 +219,11 @@ namespace TetrisCalculatingGame
                 else
                 {
                     gamepje.Lifes = gamepje.Lifes - 1;
+                    if (gamepje.Lifes <= 0)
+                    {
+                        this.EndScreen = true;
+                                             
+                    }
                 }
 
 
@@ -238,6 +252,69 @@ namespace TetrisCalculatingGame
 
         }
 
+        public void CheckEndScreen(GraphicsDeviceManager graphics, Game1 gamepje)
+        {
+            //VOORBEELD
+
+            KeyboardState newState = Keyboard.GetState();
+            MouseState newMouse = Mouse.GetState();                                         //Hieronder staat de monogame/muis verhouding!!!
+            Vector2 NewMouseCoordinates = new Vector2(newMouse.X, newMouse.Y);
+
+
+            // Is the key down?
+            if (newState.IsKeyDown(Keys.Escape))
+            {
+                // If not down last update, key has just been pressed.
+                if (!this.OldState.IsKeyDown(Keys.Escape))
+                {
+
+                }
+            }
+
+            else if (this.OldState.IsKeyDown(Keys.Escape))
+            {
+                // Key was down last update, but not down now, so
+                // it has just been released.
+                this.ResetTheGame(graphics, gamepje);
+                this.SetStateToMenu();
+            }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+            //Depending on which gamestate boolean is true, it checks if the mouse clicked in one of the areas linked with it.
+
+            if (newMouse.LeftButton == ButtonState.Pressed)
+            {
+                // If not down last update, key has just been pressed.
+                if (this.OldMouse.LeftButton != ButtonState.Pressed)
+                {
+                    if (AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        this.ResetTheGame(graphics, gamepje);
+                        this.SetStateToMenu();
+
+                    }
+
+                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        this.ResetTheGame(graphics, gamepje);
+                        this.SetStateToMenu();
+                    }
+
+                }
+            }
+
+            else if (this.OldMouse.LeftButton == ButtonState.Pressed) { }
+
+            //----------------------------------------------------------new possibility-----------------------------------------
+
+
+
+            // Update saved state.
+            this.OldState = newState;
+            this.OldMouse = newMouse;
+
+
+        }
 
     }
 }

@@ -120,15 +120,16 @@ namespace TetrisCalculatingGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            
+
             if (gameState.Menu == true)
-            {
                 gameState.CheckMenuClicks(graphics, this);
-            }
+
+            else if (gameState.EndScreen == true)
+                gameState.CheckEndScreen(graphics, this);
+
             else if (gameState.In_Game == true)
-            {
                 gameState.CheckGameClicks(graphics, this);
-            }
+            
 
             // TODO: Add your update logic here
 
@@ -168,6 +169,12 @@ namespace TetrisCalculatingGame
                     spriteBatch.Draw(gameState.All_Textures["Heart"].Item1, new Vector2(gameState.All_Textures["Heart"].Item2.X + 100*x, gameState.All_Textures["Heart"].Item2.Y));
                 }
 
+            }
+
+            if (gameState.EndScreen == true)
+            {
+                Console.WriteLine("We did it!");
+                //Volgende stap is donkerder scherm, eindscore te zien en aangeven dat je op esc moet drukken
             }
 
 
