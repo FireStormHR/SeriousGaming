@@ -58,7 +58,7 @@ namespace TetrisCalculatingGame
                 // If not down last update, key has just been pressed.
                 if (!this.OldState.IsKeyDown(Keys.Escape))
                 {
-                    gamepje.Exit();
+                    
                 }
             }
 
@@ -66,6 +66,7 @@ namespace TetrisCalculatingGame
             {
                 // Key was down last update, but not down now, so
                 // it has just been released.
+                gamepje.Exit();
             }
 
             //----------------------------------------------------------new possibility-----------------------------------------
@@ -116,7 +117,7 @@ namespace TetrisCalculatingGame
                 // If not down last update, key has just been pressed.
                 if (!this.OldState.IsKeyDown(Keys.Escape))
                 {
-                    this.SetStateToMenu();
+                    
                 }
             }
 
@@ -124,6 +125,7 @@ namespace TetrisCalculatingGame
             {
                 // Key was down last update, but not down now, so
                 // it has just been released.
+                this.SetStateToMenu();
             }
 
             //----------------------------------------------------------new possibility-----------------------------------------
