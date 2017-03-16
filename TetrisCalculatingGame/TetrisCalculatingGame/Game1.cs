@@ -58,6 +58,11 @@ namespace TetrisCalculatingGame
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Score:", ScoreTextPos, new Rectangle((int)ScoreTextPos.X, (int)ScoreTextPos.Y, (int)Arial_32.MeasureString("Score:").X, (int)Arial_32.MeasureString("Score:").Y), Color.Black));
             Vector2 EscPos = new Vector2((float)1.0 / 20 * screen_width, (float)1.0 / 20 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Esc", EscPos, new Rectangle((int)EscPos.X, (int)EscPos.Y, (int)Arial_32.MeasureString("Esc").X, (int)Arial_32.MeasureString("Esc").Y), Color.Black));
+            //Not yet used words below
+            Vector2 ChooseLevel = new Vector2((float)3.7 / 5 * screen_width, (float)1.0 / 12 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Choose level:", ChooseLevel, new Rectangle((int)ChooseLevel.X, (int)ChooseLevel.Y, (int)Arial_32.MeasureString("Choose level:").X, (int)Arial_32.MeasureString("Choose level:").Y), Color.Black));
+            Vector2 FirstLevel = new Vector2((float)3.7 / 5 * screen_width, (float)1.0 / 12 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "level 1", FirstLevel, new Rectangle((int)FirstLevel.X, (int)FirstLevel.Y, (int)Arial_32.MeasureString("level 1").X, (int)Arial_32.MeasureString("level 1").Y), Color.Black));
 
 
 
@@ -68,9 +73,12 @@ namespace TetrisCalculatingGame
             Texture2D jpgf1car = Content.Load<Texture2D>("formulacar.jpg");
             gameState.All_Textures.Add("f1car", new Tuple <Texture2D, Vector2, Rectangle>(jpgf1car, f1carPos, new Rectangle((int)f1carPos.X, (int)f1carPos.Y, jpgf1car.Width, jpgf1car.Height)));
 
+            Vector2 RosterPos = new Vector2((float)1.0 / 4 * screen_width, (float)1.0 / 25 * screen_depth);
+            Texture2D RosterPNG = Content.Load<Texture2D>("TheMatrix.png");
+            gameState.All_Textures.Add("Roster", new Tuple<Texture2D, Vector2, Rectangle>(RosterPNG, RosterPos, new Rectangle((int)RosterPos.X, (int)RosterPos.Y, RosterPNG.Width, RosterPNG.Height)));
 
-            
-            
+
+
 
 
             // TODO: use this.Content to load your game content here
@@ -131,6 +139,7 @@ namespace TetrisCalculatingGame
             {
                 spriteBatch.DrawString(AllSpritefontTexts[1].TextType, AllSpritefontTexts[1].StringToShow, AllSpritefontTexts[1].StringStartPos, AllSpritefontTexts[1].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
+                spriteBatch.Draw(gameState.All_Textures["Roster"].Item1, gameState.All_Textures["Roster"].Item2);
 
             }
 
