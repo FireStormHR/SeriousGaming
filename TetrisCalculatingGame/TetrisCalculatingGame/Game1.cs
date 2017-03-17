@@ -77,6 +77,12 @@ namespace TetrisCalculatingGame
             //#6
             Vector2 LvlUpPos = new Vector2((float)3.55 / 5 * screen_width, (float)1.0 / (float)4 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Level up! Faster!", LvlUpPos, new Rectangle((int)LvlUpPos.X, (int)LvlUpPos.Y, (int)Arial_32.MeasureString("Level up! Faster!").X, (int)Arial_32.MeasureString("Level up! Faster!").Y), Color.Red));
+            //#7
+            Vector2 GameOverPos = new Vector2((float)1 / 6 * screen_width, (float)1.4 / (float)3 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Game Over, your end score:", GameOverPos, new Rectangle((int)GameOverPos.X, (int)GameOverPos.Y, (int)Arial_32.MeasureString("Game Over, your end score:").X, (int)Arial_32.MeasureString("Game Over, your end score:").Y), Color.Red));
+
+
+
 
 
             //All textures have a key, with as return: texture, starting point, clickarea
@@ -95,7 +101,10 @@ namespace TetrisCalculatingGame
             Vector2 FirstHeartPos = new Vector2((float)2.5 / 4 * screen_width, (float)1.0 / (float)2.5 * screen_depth);
             Texture2D HeartPNG = Content.Load<Texture2D>("heart.png"); 
             gameState.All_Textures.Add("Heart", new Tuple<Texture2D, Vector2, Rectangle>(HeartPNG, FirstHeartPos, new Rectangle((int)FirstHeartPos.X, (int)FirstHeartPos.Y, HeartPNG.Width, HeartPNG.Height)));
-
+            //#
+            Vector2 BlackScreenPos = new Vector2(0,0);
+            Texture2D BlackScreenPNG = Content.Load<Texture2D>("TransBlack.png");
+            gameState.All_Textures.Add("TransBlack", new Tuple<Texture2D, Vector2, Rectangle>(BlackScreenPNG, BlackScreenPos, new Rectangle((int)BlackScreenPos.X, (int)BlackScreenPos.Y, BlackScreenPNG.Width, BlackScreenPNG.Height)));
 
 
 
@@ -173,8 +182,12 @@ namespace TetrisCalculatingGame
 
             if (gameState.EndScreen == true)
             {
-                Console.WriteLine("We did it!");
                 //Volgende stap is donkerder scherm, eindscore te zien en aangeven dat je op esc moet drukken
+                spriteBatch.Draw(gameState.All_Textures["TransBlack"].Item1, gameState.All_Textures["TransBlack"].Item2);
+                spriteBatch.DrawString(AllSpritefontTexts[7].TextType, AllSpritefontTexts[7].StringToShow, AllSpritefontTexts[7].StringStartPos, AllSpritefontTexts[7].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[5].TextType, AllSpritefontTexts[5].StringToShow, new Vector2(AllSpritefontTexts[7].StringStartPos.X + AllSpritefontTexts[7].ClickArea.Width, AllSpritefontTexts[7].StringStartPos.Y), Color.Red);
+                spriteBatch.DrawString(AllSpritefontTexts[2].TextType, "Menu", AllSpritefontTexts[2].StringStartPos, Color.Red);
+
             }
 
 

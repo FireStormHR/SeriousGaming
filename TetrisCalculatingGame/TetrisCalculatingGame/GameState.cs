@@ -164,13 +164,13 @@ namespace TetrisCalculatingGame
             //Move sumbox to left or right
 
             // Is the key down?
-            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.Left)) 
+            if (newState.IsKeyDown(Keys.Right) || newState.IsKeyDown(Keys.Left) || newState.IsKeyDown(Keys.Down) || newState.IsKeyDown(Keys.Space)) 
             {
                 // If not down last update, key has just been pressed.
 
             }
 
-            else if (this.OldState.IsKeyDown(Keys.Right) || this.OldState.IsKeyDown(Keys.Left))
+            else if (this.OldState.IsKeyDown(Keys.Right) || this.OldState.IsKeyDown(Keys.Left) || this.OldState.IsKeyDown(Keys.Down) || this.OldState.IsKeyDown(Keys.Space))
             {
                 // Key was down last update, but not down now, so
                 // it has just been released.
@@ -188,6 +188,13 @@ namespace TetrisCalculatingGame
                     temp2.X = temp2.X - 81;
                     this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp2, gamepje.All_Textures["SumBox"].Item3);
                 }
+
+                else if ((this.OldState.IsKeyDown(Keys.Down) && !newState.IsKeyDown(Keys.Down)) || (this.OldState.IsKeyDown(Keys.Space) && !newState.IsKeyDown(Keys.Space)))
+                {
+                    temp2.Y = temp2.Y + 150;
+                    this.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(gamepje.All_Textures["SumBox"].Item1, temp2, gamepje.All_Textures["SumBox"].Item3);
+                }
+
 
             }
 
