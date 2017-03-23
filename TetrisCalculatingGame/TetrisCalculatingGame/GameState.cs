@@ -49,6 +49,10 @@ namespace TetrisCalculatingGame
             this.Velocity = 1;
             gamepje.Lifes = 5;
             gamepje.PlayerScore = 0;
+            Vector2 SumBoxPos = new Vector2((float)301, (float)30);
+            Texture2D SumBoxPNG = gamepje.Content.Load<Texture2D>("SumBox.png"); //Sumbox is 785 hoog en 81 breed, begint bij x 301 en y 30
+            gamepje.All_Textures["SumBox"] = new Tuple<Texture2D, Vector2, Rectangle>(SumBoxPNG, SumBoxPos, new Rectangle((int)SumBoxPos.X, (int)SumBoxPos.Y, SumBoxPNG.Width, SumBoxPNG.Height));
+
         }
 
         //Until here, all methods and get setters are for changing the state. Beneath are all the inputchecks
@@ -90,8 +94,9 @@ namespace TetrisCalculatingGame
                     if (gamepje.AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
                     {
                         this.SetStateToGame();
-                        gamepje.StartGameFirstTime();
                         this.ResetTheGame(graphics, gamepje);
+                        gamepje.StartGameFirstTime();
+                        
                         
                     }
 
