@@ -15,7 +15,7 @@ namespace TetrisCalculatingGame
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures = new Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>>();
         public List<SpritefontText> AllSpritefontTexts = new List<SpritefontText>();
         public SpriteFont Arial_32 = null;
-        public int screen_depth, screen_width, PlayerScore, Lifes;
+        public int screen_depth, screen_width, PlayerScore, Lifes, Difficulty;
         public GameState gameState;
         public Calc calc;
 
@@ -23,7 +23,8 @@ namespace TetrisCalculatingGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            gameState = new GameState(All_Textures, AllSpritefontTexts, oldState, oldMouse); //All textures have a key, with as return: texture, starting point, clickarea
+            gameState = new GameState(All_Textures, oldState, oldMouse); //All textures have a key, with as return: texture, starting point, clickarea
+
         }
 
         protected override void Initialize()
@@ -40,6 +41,41 @@ namespace TetrisCalculatingGame
             graphics.ApplyChanges();
         }
 
+        public void StartGameFirstTime()
+        {
+            if (AllSpritefontTexts.Count < 8)
+            {
+                //#7
+                calc = new Calc(this.Difficulty);
+                Vector2 TheSum = new Vector2((float)3.69 / 5 * screen_width + AllSpritefontTexts[3].ClickArea.Width, (float)1.0 / (float)8.9 * (float)screen_depth);
+                AllSpritefontTexts.Add(new SpritefontText(Arial_32, calc.StringSom, TheSum, new Rectangle((int)TheSum.X, (int)TheSum.Y, (int)Arial_32.MeasureString(calc.StringSom).X, (int)Arial_32.MeasureString(calc.StringSom).Y), Color.Black));
+                //#8
+                Vector2 TheScore = new Vector2((float)4.0 / 5 * screen_width + AllSpritefontTexts[1].ClickArea.Width, (float)1.0 / (float)15 * (float)screen_depth);
+                AllSpritefontTexts.Add(new SpritefontText(Arial_32, PlayerScore.ToString(), TheScore, new Rectangle((int)TheScore.X, (int)TheScore.Y, (int)Arial_32.MeasureString(PlayerScore.ToString()).X, (int)Arial_32.MeasureString(PlayerScore.ToString()).Y), Color.Black));
+                //#9
+                Vector2 LvlUpPos = new Vector2((float)3.55 / 5 * screen_width, (float)1.0 / (float)4 * (float)screen_depth);
+                AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Level up! Faster!", LvlUpPos, new Rectangle((int)LvlUpPos.X, (int)LvlUpPos.Y, (int)Arial_32.MeasureString("Level up! Faster!").X, (int)Arial_32.MeasureString("Level up! Faster!").Y), Color.Red));
+                //#10
+                Vector2 GameOverPos = new Vector2((float)1 / 6 * screen_width, (float)1.4 / (float)3 * (float)screen_depth);
+                AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Game Over, your end score:", GameOverPos, new Rectangle((int)GameOverPos.X, (int)GameOverPos.Y, (int)Arial_32.MeasureString("Game Over, your end score:").X, (int)Arial_32.MeasureString("Game Over, your end score:").Y), Color.Red));
+            }
+            else
+            {
+                //#7
+                calc = new Calc(this.Difficulty);
+                Vector2 TheSum = new Vector2((float)3.69 / 5 * screen_width + AllSpritefontTexts[3].ClickArea.Width, (float)1.0 / (float)8.9 * (float)screen_depth);
+                AllSpritefontTexts[7] = new SpritefontText(Arial_32, calc.StringSom, TheSum, new Rectangle((int)TheSum.X, (int)TheSum.Y, (int)Arial_32.MeasureString(calc.StringSom).X, (int)Arial_32.MeasureString(calc.StringSom).Y), Color.Black);
+                //#8
+                Vector2 TheScore = new Vector2((float)4.0 / 5 * screen_width + AllSpritefontTexts[1].ClickArea.Width, (float)1.0 / (float)15 * (float)screen_depth);
+                AllSpritefontTexts[8] = new SpritefontText(Arial_32, PlayerScore.ToString(), TheScore, new Rectangle((int)TheScore.X, (int)TheScore.Y, (int)Arial_32.MeasureString(PlayerScore.ToString()).X, (int)Arial_32.MeasureString(PlayerScore.ToString()).Y), Color.Black);
+
+            }
+
+
+
+        }
+
+
         /// <summary>
         ///     LoadContent will be called once per game and is the place to load
         ///     all of your content.
@@ -53,6 +89,7 @@ namespace TetrisCalculatingGame
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             PlayerScore = 0;
             Lifes = 5;
+            Difficulty = 2;
             
             //#0
             Arial_32 = Content.Load<SpriteFont>("NewSpriteFont");
@@ -68,21 +105,14 @@ namespace TetrisCalculatingGame
             Vector2 Exercise = new Vector2((float)3.66 / 5 * screen_width, (float)1.0 / (float)8.9 * (float)screen_depth);
             AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Exercise:", Exercise, new Rectangle((int)Exercise.X, (int)Exercise.Y, (int)Arial_32.MeasureString("Exercise:").X, (int)Arial_32.MeasureString("Exercise:").Y), Color.Black));
             //#4
-            calc = new Calc(2);
-            Vector2 TheSum = new Vector2((float)3.69 / 5 * screen_width + AllSpritefontTexts[3].ClickArea.Width, (float)1.0 / (float)8.9 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, calc.StringSom, TheSum, new Rectangle((int)TheSum.X, (int)TheSum.Y, (int)Arial_32.MeasureString(calc.StringSom).X, (int)Arial_32.MeasureString(calc.StringSom).Y), Color.Black));
+            Vector2 DifficultyPos = new Vector2((float)16.0 / 20 * screen_width - 30, (float)1.0 / 20 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Difficulty:", DifficultyPos, new Rectangle((int)DifficultyPos.X, (int)DifficultyPos.Y, (int)Arial_32.MeasureString("Difficulty:").X, (int)Arial_32.MeasureString("Difficulty:").Y), Color.Black));
             //#5
-            Vector2 TheScore = new Vector2((float)4.0 / 5 * screen_width + AllSpritefontTexts[1].ClickArea.Width, (float)1.0 / (float)15 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, PlayerScore.ToString(), TheScore, new Rectangle((int)TheScore.X, (int)TheScore.Y, (int)Arial_32.MeasureString(PlayerScore.ToString()).X, (int)Arial_32.MeasureString(PlayerScore.ToString()).Y), Color.Black));
+            Vector2 PlusMinusPos = new Vector2((float)16.0 / 20 * screen_width, (float)2.0 / 20 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "1: Plus/Minus", PlusMinusPos, new Rectangle((int)PlusMinusPos.X, (int)PlusMinusPos.Y, (int)Arial_32.MeasureString("1: Plus/Minus").X, (int)Arial_32.MeasureString("1: Plus/Minus").Y), Color.Red));
             //#6
-            Vector2 LvlUpPos = new Vector2((float)3.55 / 5 * screen_width, (float)1.0 / (float)4 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Level up! Faster!", LvlUpPos, new Rectangle((int)LvlUpPos.X, (int)LvlUpPos.Y, (int)Arial_32.MeasureString("Level up! Faster!").X, (int)Arial_32.MeasureString("Level up! Faster!").Y), Color.Red));
-            //#7
-            Vector2 GameOverPos = new Vector2((float)1 / 6 * screen_width, (float)1.4 / (float)3 * (float)screen_depth);
-            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "Game Over, your end score:", GameOverPos, new Rectangle((int)GameOverPos.X, (int)GameOverPos.Y, (int)Arial_32.MeasureString("Game Over, your end score:").X, (int)Arial_32.MeasureString("Game Over, your end score:").Y), Color.Red));
-
-
-
+            Vector2 MultiplyPos = new Vector2((float)16.0 / 20 * screen_width, (float)3.0 / 20 * (float)screen_depth);
+            AllSpritefontTexts.Add(new SpritefontText(Arial_32, "2: Multiply/Divide", MultiplyPos, new Rectangle((int)MultiplyPos.X, (int)MultiplyPos.Y, (int)Arial_32.MeasureString("2: Multiply/Divide").X, (int)Arial_32.MeasureString("2: Multiply/Divide").Y), Color.Black));
 
 
             //All textures have a key, with as return: texture, starting point, clickarea
@@ -129,7 +159,7 @@ namespace TetrisCalculatingGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
+            
             if (gameState.Menu == true)
                 gameState.CheckMenuClicks(graphics, this);
 
@@ -159,6 +189,10 @@ namespace TetrisCalculatingGame
             {
                 spriteBatch.DrawString(AllSpritefontTexts[0].TextType, AllSpritefontTexts[0].StringToShow, AllSpritefontTexts[0].StringStartPos, AllSpritefontTexts[0].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[4].TextType, AllSpritefontTexts[4].StringToShow, AllSpritefontTexts[4].StringStartPos, AllSpritefontTexts[4].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[5].TextType, AllSpritefontTexts[5].StringToShow, AllSpritefontTexts[5].StringStartPos, AllSpritefontTexts[5].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[6].TextType, AllSpritefontTexts[6].StringToShow, AllSpritefontTexts[6].StringStartPos, AllSpritefontTexts[6].Colour);
+
                 spriteBatch.Draw(gameState.All_Textures["f1car"].Item1, gameState.All_Textures["f1car"].Item2);
             }
             if (gameState.In_Game == true)
@@ -166,10 +200,10 @@ namespace TetrisCalculatingGame
                 spriteBatch.DrawString(AllSpritefontTexts[1].TextType, AllSpritefontTexts[1].StringToShow, AllSpritefontTexts[1].StringStartPos, AllSpritefontTexts[1].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[2].TextType, AllSpritefontTexts[2].StringToShow, AllSpritefontTexts[2].StringStartPos, AllSpritefontTexts[2].Colour);
                 spriteBatch.DrawString(AllSpritefontTexts[3].TextType, AllSpritefontTexts[3].StringToShow, AllSpritefontTexts[3].StringStartPos, AllSpritefontTexts[3].Colour);
-                spriteBatch.DrawString(AllSpritefontTexts[4].TextType, AllSpritefontTexts[4].StringToShow, AllSpritefontTexts[4].StringStartPos, AllSpritefontTexts[4].Colour);
-                spriteBatch.DrawString(AllSpritefontTexts[5].TextType, AllSpritefontTexts[5].StringToShow, AllSpritefontTexts[5].StringStartPos, AllSpritefontTexts[5].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[7].TextType, AllSpritefontTexts[7].StringToShow, AllSpritefontTexts[7].StringStartPos, AllSpritefontTexts[7].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[8].TextType, AllSpritefontTexts[8].StringToShow, AllSpritefontTexts[8].StringStartPos, AllSpritefontTexts[8].Colour);
                 if (gameState.NotifyFramesCounter!=0)
-                    spriteBatch.DrawString(AllSpritefontTexts[6].TextType, AllSpritefontTexts[6].StringToShow, AllSpritefontTexts[6].StringStartPos, AllSpritefontTexts[6].Colour);
+                    spriteBatch.DrawString(AllSpritefontTexts[9].TextType, AllSpritefontTexts[9].StringToShow, AllSpritefontTexts[9].StringStartPos, AllSpritefontTexts[9].Colour);
 
                 spriteBatch.Draw(gameState.All_Textures["Roster"].Item1, gameState.All_Textures["Roster"].Item2);
                 spriteBatch.Draw(gameState.All_Textures["SumBox"].Item1, gameState.All_Textures["SumBox"].Item2);
@@ -184,8 +218,8 @@ namespace TetrisCalculatingGame
             {
                 //Volgende stap is donkerder scherm, eindscore te zien en aangeven dat je op esc moet drukken
                 spriteBatch.Draw(gameState.All_Textures["TransBlack"].Item1, gameState.All_Textures["TransBlack"].Item2);
-                spriteBatch.DrawString(AllSpritefontTexts[7].TextType, AllSpritefontTexts[7].StringToShow, AllSpritefontTexts[7].StringStartPos, AllSpritefontTexts[7].Colour);
-                spriteBatch.DrawString(AllSpritefontTexts[5].TextType, AllSpritefontTexts[5].StringToShow, new Vector2(AllSpritefontTexts[7].StringStartPos.X + AllSpritefontTexts[7].ClickArea.Width, AllSpritefontTexts[7].StringStartPos.Y), Color.Red);
+                spriteBatch.DrawString(AllSpritefontTexts[10].TextType, AllSpritefontTexts[10].StringToShow, AllSpritefontTexts[10].StringStartPos, AllSpritefontTexts[10].Colour);
+                spriteBatch.DrawString(AllSpritefontTexts[8].TextType, AllSpritefontTexts[8].StringToShow, new Vector2(AllSpritefontTexts[10].StringStartPos.X + AllSpritefontTexts[10].ClickArea.Width, AllSpritefontTexts[10].StringStartPos.Y), Color.Red);
                 spriteBatch.DrawString(AllSpritefontTexts[2].TextType, "Menu", AllSpritefontTexts[2].StringStartPos, Color.Red);
 
             }

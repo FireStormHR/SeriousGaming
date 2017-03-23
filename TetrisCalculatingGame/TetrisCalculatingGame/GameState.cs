@@ -13,19 +13,17 @@ namespace TetrisCalculatingGame
     {
         public bool Menu, In_Game, EndScreen;
         public Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_Textures;
-        public List<SpritefontText> AllSpritefontTexts;
         public KeyboardState OldState;
         public MouseState OldMouse;
         public int Velocity, NotifyFramesCounter;
 
-        public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, List<SpritefontText> AllSpritefontTexts, KeyboardState oldState, MouseState oldMouse)
+        public GameState(Dictionary<string, Tuple<Texture2D, Vector2, Rectangle>> All_textures, KeyboardState oldState, MouseState oldMouse)
         {
             this.Menu = true;
             this.In_Game = false;
             this.EndScreen = false;
 
             this.All_Textures = All_textures;
-            this.AllSpritefontTexts = AllSpritefontTexts;
             this.OldState = oldState;
             this.OldMouse = oldMouse;
             this.Velocity = 1;
@@ -89,15 +87,31 @@ namespace TetrisCalculatingGame
                 // If not down last update, key has just been pressed.
                 if (this.OldMouse.LeftButton != ButtonState.Pressed)
                 {
-                    if (AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
+                    if (gamepje.AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
                     {
                         this.SetStateToGame();
+                        gamepje.StartGameFirstTime();
+                        this.ResetTheGame(graphics, gamepje);
                         
                     }
 
-                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    if (gamepje.AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
                     {
                         gamepje.Exit();
+                    }
+
+                    if (gamepje.AllSpritefontTexts[5].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        gamepje.Difficulty = 2;
+                        gamepje.AllSpritefontTexts[5].Colour = Color.Red;
+                        gamepje.AllSpritefontTexts[6].Colour = Color.Black;
+                    }
+
+                    if (gamepje.AllSpritefontTexts[6].ClickArea.Contains(NewMouseCoordinates))
+                    {
+                        gamepje.Difficulty = 3;
+                        gamepje.AllSpritefontTexts[5].Colour = Color.Black;
+                        gamepje.AllSpritefontTexts[6].Colour = Color.Red;
                     }
 
                 }
@@ -149,7 +163,7 @@ namespace TetrisCalculatingGame
                 if (this.OldMouse.LeftButton != ButtonState.Pressed)
                 {
 
-                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    if (gamepje.AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
                     {
                         this.SetStateToMenu();
                     }
@@ -215,7 +229,7 @@ namespace TetrisCalculatingGame
                 if (gamepje.calc.SomAnswer == AnswerOfUser)
                 {
                     gamepje.PlayerScore = gamepje.PlayerScore + 1;
-                    gamepje.AllSpritefontTexts[5].StringToShow = gamepje.PlayerScore.ToString();
+                    gamepje.AllSpritefontTexts[8].StringToShow = gamepje.PlayerScore.ToString();
                     if (gamepje.PlayerScore %5 == 0)
                     {
                         this.Velocity = this.Velocity + 1;
@@ -234,8 +248,8 @@ namespace TetrisCalculatingGame
                 }
 
 
-                gamepje.calc = new Calc(2);
-                gamepje.AllSpritefontTexts[4].StringToShow = gamepje.calc.StringSom;
+                gamepje.calc = new Calc(gamepje.Difficulty);
+                gamepje.AllSpritefontTexts[7].StringToShow = gamepje.calc.StringSom;
                 temp.Y = 30;
             }
 
@@ -294,14 +308,14 @@ namespace TetrisCalculatingGame
                 // If not down last update, key has just been pressed.
                 if (this.OldMouse.LeftButton != ButtonState.Pressed)
                 {
-                    if (AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
+                    if (gamepje.AllSpritefontTexts[0].ClickArea.Contains(NewMouseCoordinates))
                     {
                         this.ResetTheGame(graphics, gamepje);
                         this.SetStateToMenu();
 
                     }
 
-                    if (AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
+                    if (gamepje.AllSpritefontTexts[2].ClickArea.Contains(NewMouseCoordinates))
                     {
                         this.ResetTheGame(graphics, gamepje);
                         this.SetStateToMenu();
